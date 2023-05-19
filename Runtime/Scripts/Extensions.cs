@@ -7,9 +7,7 @@ namespace BTween
 	{
 
 		#region TransformExtensions
-
 		
-
 		public static Tween BMoveTo(this Transform transform, Vector3 endWorldPos, float time, Ease ease = Ease.Linear, bool startNow = true)
 		{
 			Tween t = new Tween(time);
@@ -71,6 +69,19 @@ namespace BTween
 		{
 			Tween t = new Tween(time);
 			t.Add(new QuaternionTween(x => transform.localRotation = x, transform.rotation, endRot, ease));
+
+			if (startNow)
+			{
+				t.Start();
+			}
+
+			return t;
+		}
+		
+		public static Tween BScaleTo(this Transform transform, Vector3 endLocalScale, float time, Ease ease = Ease.Linear, bool startNow = true)
+		{
+			Tween t = new Tween(time);
+			t.Add(new Vector3Tween(x => transform.localScale = x, transform.localScale, endLocalScale, ease));
 
 			if (startNow)
 			{
