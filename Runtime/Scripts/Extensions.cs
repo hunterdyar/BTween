@@ -91,6 +91,20 @@ namespace BTween
 			return t;
 		}
 
+		public static Tween BScaleFromTo(this Transform transform, Vector3 startLocal, Vector3 endLocalScale, float time,
+			Ease ease = Ease.Linear, bool startNow = true)
+		{
+			Tween t = new Tween(time);
+			t.Add(new Vector3Tween(x => transform.localScale = x, startLocal, endLocalScale, ease));
+
+			if (startNow)
+			{
+				t.Start();
+			}
+			
+			return t;
+		}
+
 
 		#endregion
 
