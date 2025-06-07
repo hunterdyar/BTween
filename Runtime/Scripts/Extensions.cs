@@ -124,5 +124,61 @@ namespace BTween
 		}
 		
 		#endregion
+		
+		#region SpriteRendererExtension
+		
+		public static Tween BTweenColorTo(this SpriteRenderer spriteRenderer, Color color, float time, Ease ease = Ease.Linear, bool startNow = true)
+		{
+			Tween t = new Tween(time);
+			t.Add(new SpriteRendererColorTween(spriteRenderer, spriteRenderer.color, color, ease));
+			if (startNow)
+			{
+				t.Start();
+			}
+
+			return t;
+		}
+
+		public static Tween BTweenColorFromTo(this SpriteRenderer spriteRenderer, Color startColor, Color endColor, float time, Ease ease = Ease.Linear, bool startNow = true)
+		{
+			Tween t = new Tween(time);
+			t.Add(new SpriteRendererColorTween(spriteRenderer, startColor, endColor, ease));
+			if (startNow)
+			{
+				t.Start();
+			}
+
+			return t;
+		}
+
+		public static Tween BTweenOpacityTo(this SpriteRenderer spriteRenderer, float alpha, float time, Ease ease = Ease.Linear, bool startNow = true)
+		{
+			Tween t = new Tween(time);
+			var startColor = spriteRenderer.color;
+			var endColor = new Color(startColor.r, startColor.g, startColor.b, alpha);
+			t.Add(new SpriteRendererColorTween(spriteRenderer, startColor, endColor, ease));
+			if (startNow)
+			{
+				t.Start();
+			}
+
+			return t;
+		}
+
+		public static Tween BTweenOpacityFromTo(this SpriteRenderer spriteRenderer, float startAlpha, float endAlpha, float time,
+			Ease ease = Ease.Linear, bool startNow = true)
+		{
+			Tween t = new Tween(time);
+			var startColor = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, startAlpha);
+			var endColor = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, endAlpha);
+			t.Add(new SpriteRendererColorTween(spriteRenderer, startColor, endColor, ease));
+			if (startNow)
+			{
+				t.Start();
+			}
+
+			return t;
+		}
+		#endregion
 	}
 }
