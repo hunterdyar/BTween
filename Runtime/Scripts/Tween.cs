@@ -64,12 +64,16 @@ namespace BTween
 			}
 			while (t < 1)
 			{
+				if (!_running)
+				{
+					//early abort if stopped.
+					return;
+				}
 				foreach (var tween in _tweens)
 				{
 					tween.Execute(t);
 					t += Time.deltaTime/_totalTime;
 				}
-
 				await Task.Yield();
 			}
 
@@ -96,6 +100,15 @@ namespace BTween
 			DoTween();
 			OnStartCallback?.Invoke();
 		}
+
+		public void Stop()
+		{
+			foreach (var tween in _tweens)
+			{
+				tween.SetToEnd();
+			}
+			_running = false;
+		}
 		public Tween OnComplete(Callback onComplete)
 		{
 			OnCompleteCallback = onComplete;
@@ -107,6 +120,5 @@ namespace BTween
 			OnStartCallback = onComplete;
 			return this;
 		}
-		
 	}
 }
