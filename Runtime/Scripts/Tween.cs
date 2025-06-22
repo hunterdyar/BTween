@@ -66,7 +66,6 @@ namespace BTween
 			{
 				if (!_running)
 				{
-					//early abort if stopped.
 					return;
 				}
 				foreach (var tween in _tweens)

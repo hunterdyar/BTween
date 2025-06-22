@@ -11,7 +11,14 @@ namespace BTween
 		public static Tween BMoveTo(this Transform transform, Vector3 endWorldPos, float time, Ease ease = Ease.Linear, bool startNow = true)
 		{
 			Tween t = new Tween(time);
-			t.Add(new Vector3Tween(x=>transform.position = x,transform.position,endWorldPos,ease));
+			t.Add(new Vector3Tween(x=>
+			{
+				if (transform)
+				{
+					return transform.position = x;
+				}
+				return Vector3.zero;
+			},transform.position,endWorldPos,ease));
 
 			if (startNow)
 			{
@@ -24,7 +31,14 @@ namespace BTween
 		public static Tween BMoveFromTo(this Transform transform, Vector3 startWorldPos, Vector3 endWorldPos, float time, Ease ease = Ease.Linear, bool startNow = true)
 		{
 			Tween t = new Tween(time);
-			t.Add(new Vector3Tween(x => transform.position = x, startWorldPos, endWorldPos, ease));
+			t.Add(new Vector3Tween(x =>
+			{
+				if (transform)
+				{
+					return transform.position = x;
+				}
+				return Vector3.zero;
+			}, startWorldPos, endWorldPos, ease));
 		
 			if (startNow)
 			{
@@ -55,7 +69,14 @@ namespace BTween
 		public static Tween BRotateFromTo(this Transform transform, Quaternion from, Quaternion endRot, float time, Ease ease = Ease.Linear, bool startNow = true)
 		{
 			Tween t = new Tween(time);
-			t.Add(new QuaternionTween(x => transform.rotation = x, from, endRot, ease));
+			t.Add(new QuaternionTween(x =>
+			{
+				if (transform)
+				{
+					return transform.rotation = x;
+				}
+				return Quaternion.identity;
+			}, from, endRot, ease));
 			
 			if (startNow)
 			{
@@ -68,7 +89,15 @@ namespace BTween
 		public static Tween BRotateLocalTo(this Transform transform, Quaternion endRot, float time, Ease ease = Ease.Linear, bool startNow = true)
 		{
 			Tween t = new Tween(time);
-			t.Add(new QuaternionTween(x => transform.localRotation = x, transform.rotation, endRot, ease));
+			t.Add(new QuaternionTween(x =>
+			{
+				if (transform)
+				{
+					return transform.localRotation = x;
+				}
+				return Quaternion.identity;
+			},
+				transform.rotation, endRot, ease));
 
 			if (startNow)
 			{
@@ -81,7 +110,14 @@ namespace BTween
 		public static Tween BScaleTo(this Transform transform, Vector3 endLocalScale, float time, Ease ease = Ease.Linear, bool startNow = true)
 		{
 			Tween t = new Tween(time);
-			t.Add(new Vector3Tween(x => transform.localScale = x, transform.localScale, endLocalScale, ease));
+			t.Add(new Vector3Tween(x =>
+			{
+				if (transform)
+				{
+					transform.localScale = x;
+				}
+				return Vector3.zero;
+			}, transform.localScale, endLocalScale, ease));
 
 			if (startNow)
 			{
@@ -95,7 +131,15 @@ namespace BTween
 			Ease ease = Ease.Linear, bool startNow = true)
 		{
 			Tween t = new Tween(time);
-			t.Add(new Vector3Tween(x => transform.localScale = x, startLocal, endLocalScale, ease));
+			t.Add(new Vector3Tween(x =>
+			{
+				if (transform)
+				{
+					return transform.localScale = x;
+				} 
+				return Vector3.zero;
+				
+			}, startLocal, endLocalScale, ease));
 
 			if (startNow)
 			{
@@ -104,8 +148,7 @@ namespace BTween
 			
 			return t;
 		}
-
-
+		
 		#endregion
 
 		#region MeshRendererExtension
